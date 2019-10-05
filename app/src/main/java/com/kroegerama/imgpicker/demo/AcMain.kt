@@ -27,6 +27,18 @@ class AcMain : BaseActivity(), BottomSheetImagePicker.OnImagesSelectedListener {
             .singleSelectTitle(R.string.pick_single)
             .peekHeight(R.dimen.peekHeight)
             .requestTag("single")
+            .onImagesSelected(object : BottomSheetImagePicker.OnImagesSelectedListener {
+                override fun onImagesSelected(uris: List<Uri>, tag: String?) {
+                    toast("Result from tag: $tag")
+
+                    imageContainer.removeAllViews()
+                    uris.forEach { uri ->
+                        val iv = LayoutInflater.from(this@AcMain).inflate(R.layout.scrollitem_image, imageContainer, false) as ImageView
+                        imageContainer.addView(iv)
+                        Glide.with(this@AcMain).load(uri).into(iv)
+                    }
+                }
+            })
             .show(supportFragmentManager)
     }
 
@@ -39,18 +51,23 @@ class AcMain : BaseActivity(), BottomSheetImagePicker.OnImagesSelectedListener {
                 R.plurals.pick_multi_more,
                 R.string.pick_multi_limit
             )
+            .onImagesSelected(object : BottomSheetImagePicker.OnImagesSelectedListener {
+                override fun onImagesSelected(uris: List<Uri>, tag: String?) {
+                    toast("Result from tag: $tag")
+
+                    imageContainer.removeAllViews()
+                    uris.forEach { uri ->
+                        val iv = LayoutInflater.from(this@AcMain).inflate(R.layout.scrollitem_image, imageContainer, false) as ImageView
+                        imageContainer.addView(iv)
+                        Glide.with(this@AcMain).load(uri).into(iv)
+                    }
+                }
+            })
             .requestTag("multi")
             .show(supportFragmentManager)
     }
 
     override fun onImagesSelected(uris: List<Uri>, tag: String?) {
-        toast("Result from tag: $tag")
 
-        imageContainer.removeAllViews()
-        uris.forEach { uri ->
-            val iv = LayoutInflater.from(this).inflate(R.layout.scrollitem_image, imageContainer, false) as ImageView
-            imageContainer.addView(iv)
-            Glide.with(this).load(uri).into(iv)
-        }
     }
 }

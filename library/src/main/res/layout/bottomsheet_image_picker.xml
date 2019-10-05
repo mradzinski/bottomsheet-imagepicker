@@ -75,7 +75,7 @@
         android:paddingEnd="@dimen/imagePickerTileSpacing"
         android:paddingBottom="@dimen/imagePickerTileSpacing"
         android:scrollbarStyle="outsideOverlay"
-        tools:listitem="@layout/tile_image" />
+        tools:listitem="@layout/bottomsheet_image_picker_tile_image" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -83,10 +83,10 @@
 
         <ProgressBar
             android:id="@+id/progress"
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:indeterminate="true" />
+            android:indeterminate="true"
+            android:layout_marginTop="28dp"/>
 
         <TextView
             android:id="@+id/tvEmpty"
@@ -94,11 +94,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingStart="16dp"
-            android:paddingTop="32dp"
+            android:paddingTop="84dp"
             android:paddingEnd="16dp"
             android:paddingBottom="32dp"
             android:text="@string/imagePickerLoading"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textSize="16sp"/>
     </FrameLayout>
 
 </LinearLayout>

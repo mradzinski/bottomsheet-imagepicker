@@ -3,7 +3,6 @@ package com.kroegerama.imgpicker
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -29,7 +28,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kroegerama.kaiteki.recyclerview.layout.AutofitLayoutManager
-import kotlinx.android.synthetic.main.imagepicker.*
+import kotlinx.android.synthetic.main.bottomsheet_image_picker.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -75,13 +74,6 @@ class BottomSheetImagePicker internal constructor() :
         ImageTileAdapter(isMultiSelect, showCameraTile, showGalleryTile, ::tileClick, ::selectionCountChanged)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnImagesSelectedListener) {
-            onImagesSelectedListener = context
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadArguments()
@@ -96,7 +88,7 @@ class BottomSheetImagePicker internal constructor() :
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        inflater.inflate(R.layout.imagepicker, container, false).also {
+        inflater.inflate(R.layout.bottomsheet_image_picker, container, false).also {
             (parentFragment as? OnImagesSelectedListener)?.let { onImagesSelectedListener = it }
         }
 
@@ -151,6 +143,10 @@ class BottomSheetImagePicker internal constructor() :
             bottomSheetBehavior.peekHeight = resources.getDimensionPixelSize(peekHeight)
             bottomSheetBehavior.setBottomSheetCallback(bottomSheetCallback)
         }
+    }
+
+    fun setOnImageSelectedListener(listener: OnImagesSelectedListener) {
+        this.onImagesSelectedListener = listener
     }
 
     private val bottomSheetCallback by lazy {
@@ -406,6 +402,8 @@ class BottomSheetImagePicker internal constructor() :
             putString(KEY_PROVIDER, provider)
         }
 
+        private var listener: OnImagesSelectedListener? = null
+
         fun requestTag(requestTag: String) = args.run {
             putString(KEY_REQUEST_TAG, requestTag)
             this@Builder
@@ -466,7 +464,15 @@ class BottomSheetImagePicker internal constructor() :
             this@Builder
         }
 
-        fun build() = BottomSheetImagePicker().apply { arguments = args }
+        fun onImagesSelected(listener: OnImagesSelectedListener) : Builder {
+            this.listener = listener
+            return this
+        }
+
+        fun build() = BottomSheetImagePicker().apply {
+            this@Builder.listener?.let { setOnImageSelectedListener(it) }
+            arguments = args
+        }
 
         fun show(fm: FragmentManager, tag: String? = null) = build().show(fm, tag)
 

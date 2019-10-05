@@ -6,14 +6,14 @@ android {
     compileSdkVersion 28
 
     compileOptions {
-        kotlinOptions.freeCompilerArgs += ['-module-name', "bottomsheet.imagepicker"]
+        kotlinOptions.freeCompilerArgs += ['-module-name', "bottomsheet.bottomsheet_image_picker"]
     }
 
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0.4"
+        versionName "1.1.0"
     }
 
     buildTypes {
@@ -28,16 +28,16 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'androidx.core:core-ktx:1.1.0-rc03'
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
-    api 'com.google.android.material:material:1.1.0-alpha09'
+    api 'com.google.android.material:material:1.1.0-alpha10'
 
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
     implementation 'com.kroegerama:android-kaiteki:2.7.1'
     implementation 'com.kroegerama:recyclerview-kaiteki:1.0.6'
-
     implementation("com.github.bumptech.glide:glide:4.9.0") {
         exclude group: "com.android.support"
     }
+
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 }

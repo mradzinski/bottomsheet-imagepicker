@@ -54,7 +54,7 @@ internal class ImageTileAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHImageTileBase =
         LayoutInflater.from(parent.context).inflate(
-            if (viewType == VT_IMAGE) R.layout.tile_image else R.layout.tile_special,
+            if (viewType == VT_IMAGE) R.layout.bottomsheet_image_picker_tile_image else R.layout.bottomsheet_image_picker_tile_special,
             parent, false
         ).let { view ->
             when (viewType) {
